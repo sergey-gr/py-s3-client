@@ -1,0 +1,19 @@
+logging:
+  # Levels: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: INFO
+  # Outputs: file, stdout
+  output: file
+  # Use UTC datetime format
+  utc_datetime: false
+s3:
+  address: s3.example.com
+  bucket: my_bucket_name
+  accessKey: my_access_key
+  secretKey: my_secret_key
+data:
+  # Name of the file to upload
+  name: demo/demo_file.txt
+  # Name of local file
+  file: demo_file.txt
+  upload_dir: ./data/uploads
+  download_dir: ./data/downloads

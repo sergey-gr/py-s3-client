@@ -1,0 +1,13 @@
+# Directories
+.venv
+logs
+__pycache__
+
+# Files
+.DS_Store
+config/*
+!config/*.sample
+data/downloads/*
+!data/**/readme.txt
+!data/uploads/demo_file.txt
+
