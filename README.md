@@ -1,7 +1,7 @@
 # S3 Browser
 
 - Python package [MinIO](https://github.com/minio/minio-py).
-- MinIO API [docs](https://min.io/docs/minio/linux/developers/python/API.html).
+- Python Client [API Reference](https://min.io/docs/minio/linux/developers/python/API.html).
 
 ## Setup
 
