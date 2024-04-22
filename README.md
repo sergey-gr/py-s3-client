@@ -66,6 +66,7 @@ Edit configuration file by setting s3 credentials:
 ```yml
 s3:
   address: s3.example.com
+  use_ssl: True
   bucket: my_bucket_name
   accessKey: my_access_key
   secretKey: my_secret_key
