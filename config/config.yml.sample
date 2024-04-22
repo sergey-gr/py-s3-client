@@ -5,8 +5,13 @@ logging:
   output: file
   # Use UTC datetime format
   utc_datetime: false
+proxy:
+  enabled: False
+  address: proxy.example.com
+  port: 8080
 s3:
   address: s3.example.com
+  use_ssl: True
   bucket: my_bucket_name
   accessKey: my_access_key
   secretKey: my_secret_key

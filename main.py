@@ -59,8 +59,12 @@ def log_setup():
 log_setup()
 
 def main():
+    proxy = config['proxy']
+    if proxy['enabled'] is True:
+        logging.info(f"Proxy enabled, using proxy address: {proxy['address']}:{proxy['port']}")
+
     data = config['data']
-    s3 = S3Browser(config['s3'])
+    s3 = S3Browser(config['s3'], proxy)
 
     if s3.bucket_exists() is True:
         # s3.list_buckets()
@@ -71,4 +75,6 @@ def main():
         s3.remove_object(data['name'])
 
 if __name__ == '__main__':
+    logging.info(f"Starting S3 Browser ...")
     main()
+    logging.info(f"S3 Browser Done!")

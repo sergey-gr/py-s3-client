@@ -1,24 +1,52 @@
+import logging
+
+import urllib3
 from minio import Minio
 from minio.error import S3Error
-import logging
 
 
 class S3Browser:
-    def __init__(self, data) -> None:
+    def __init__(self, data: dict, proxy: dict|None) -> None:
+        # Data values
         self.address = data['address']
         self.access_key = data['accessKey']
         self.secret_key = data['secretKey']
         self.bucket = data['bucket']
+        self.secure = data['use_ssl']
+        # Proxy
+        self.use_proxy = proxy['enabled']
+        self.proxy_address = proxy['address']
+        self.proxy_port = proxy['port']
+        # Client
         self.client = self.connect()
 
     def connect(self) -> None:
         logging.info(f"Server '{self.address}', access key '{self.access_key}'")
-        client = Minio(
-            endpoint=self.address,
-            access_key=self.access_key,
-            secret_key=self.secret_key,
-            secure=True,
-        )
+        if self.use_proxy is False:
+            client = Minio(
+                endpoint=self.address,
+                access_key=self.access_key,
+                secret_key=self.secret_key,
+                secure=False if self.secure is False else True,
+            )
+        else:
+            client = Minio(
+                endpoint=self.address,
+                access_key=self.access_key,
+                secret_key=self.secret_key,
+                secure=False if self.secure is False else True,
+                http_client=urllib3.ProxyManager(
+                    f"http://{self.proxy_address}:{self.proxy_port}/",
+                    timeout=urllib3.Timeout.DEFAULT_TIMEOUT,
+                    cert_reqs="CERT_REQUIRED",
+                    retries=urllib3.Retry(
+                        total=5,
+                        backoff_factor=0.2,
+                        status_forcelist=[500, 502, 503, 504],
+                    ),
+                ),
+            )
+
         return client
 
     def make_bucket(self) -> None:
